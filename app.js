@@ -49,7 +49,7 @@ const server = http.createServer((req, res) => {
         <div class="card">
           <h1>CI/CD Pipeline Live</h1>
           <p> Node.js + Jenkins + Docker + AWS </p>
-          <div class="tag">Deployed Successfully </div>
+          <div class="tag">Deployed Successfully node app </div>
         </div>
       </body>
     </html>
