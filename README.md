@@ -39,16 +39,51 @@ This setup automates the process of:
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ CICD Workflow
+                    👩‍💻 Developer
+                          │
+                          │ git push
+                          ▼
+                ┌──────────────────────┐
+                │       GitHub         │
+                │ (Source Code Repo)   │
+                └──────────────────────┘
+                          │
+                          │ Webhook Trigger
+                          ▼
+                ┌──────────────────────┐
+                │       Jenkins        │
+                │   (CI/CD Server)     │
+                └──────────────────────┘
+                          │
+        ┌─────────────────┼─────────────────┐
+        │                 │                 │
+        ▼                 ▼                 ▼
+   Checkout Code     Build Stage      Test Stage
+                        │                 │
+                        └──────┬──────────┘
+                               ▼
+                     ┌──────────────────┐
+                     │  Docker Build    │
+                     │ (Create Image)   │
+                     └──────────────────┘
+                               │
+                               ▼
+                     ┌──────────────────┐
+                     │ Docker Container │
+                     │  (Deployment)    │
+                     └──────────────────┘
+                               │
+                               ▼
+                 ┌────────────────────────┐
+                 │        AWS EC2         │
+                 │   (Application Host)   │
+                 └────────────────────────┘
+                               │
+                               ▼
+                        🌐 End Users
+                  http://EC2-IP:3001
 
-### 1️⃣ Launch EC2 Instance
-
-* Create Ubuntu EC2 instance
-* Open ports:
-
-  * 22 (SSH)
-  * 8080 (Jenkins)
-  * 3001 (Application)
 
 ---
 
@@ -114,66 +149,6 @@ sudo systemctl enable jenkins
 
 ---
 
-## 🐳 Dockerfile
-
-```dockerfile
-FROM node:18
-
-WORKDIR /app
-
-COPY package.json ./
-
-RUN npm install
-
-COPY . .
-
-RUN npm install -g pm2
-
-EXPOSE 3000
-
-CMD ["pm2-runtime", "app.js"]
-```
-
----
-
-## ⚙️ Jenkinsfile
-
-```groovy
-pipeline {
-    agent any
-
-    triggers {
-        githubPush()
-    }
-
-    stages {
-
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t node-app .'
-            }
-        }
-
-        stage('Stop Old Container') {
-            steps {
-                sh '''
-                docker ps -q --filter "name=node-container" | grep -q . && docker stop node-container || true
-                docker ps -aq --filter "name=node-container" | grep -q . && docker rm node-container || true
-                '''
-            }
-        }
-
-        stage('Run New Container') {
-            steps {
-                sh 'docker run -d -p 3001:3000 --name node-container node-app'
-            }
-        }
-    }
-}
-```
-
----
-
 ## 🚀 How It Works
 
 1. Developer pushes code to GitHub
@@ -184,31 +159,6 @@ pipeline {
 6. New container is deployed
 
 ---
-
-## 🌐 Access Application
-
-```
-http://<EC2-IP>:3001
-```
-
----
-
-## 🔍 Verify Deployment
-
-```bash
-docker ps
-```
-
----
-
-## 🧹 Cleanup Commands
-
-```bash
-docker stop $(docker ps -q)
-docker rm $(docker ps -aq)
-docker image prune -f
-```
-
 ## 👩‍💻 Author
 
 Anuja Ayare
