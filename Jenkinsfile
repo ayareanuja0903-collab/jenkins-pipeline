@@ -24,7 +24,7 @@ pipeline {
 
         stage('Run New Container') {
             steps {
-                sh 'docker run -d -p 3000:3000 --name node-container node-app'
+                sh 'docker run -d -p 3001:3000 --name node-container node-app'
             }
         }
     }
