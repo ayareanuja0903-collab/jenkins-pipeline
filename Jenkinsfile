@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git 'https://github.com/ayareanuja0903-collab/jenkins-pipeline.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t node-app .'
