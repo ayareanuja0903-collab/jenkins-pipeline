@@ -1,20 +1,42 @@
 pipeline {
     agent any
 
+    triggers {
+        githubPush()
+    }
+
     stages {
-        stage('Build Docker Image') {
+
+        stage('Clone') {
             steps {
-                sh 'docker build -t my-node-app .'
+                git 'https://github.com/ayareanuja0903-collab/jenkins-pipeline.git'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t node-app .'
+            }
+        }
+
+        stage('Stop Old Container') {
             steps {
                 sh '''
-                docker stop $(docker ps -q) || true
-                docker rm $(docker ps -aq) || true
-                docker run -d -p 3000:3000 --name my-container my-node-app
+                docker stop node-container || true
+                docker rm node-container || true
                 '''
+            }
+        }
+
+        stage('Run New Container') {
+            steps {
+                sh 'docker run -d -p 3000:3000 --name node-container node-app'
+            }
+        }
+
+        stage('Clean Images') {
+            steps {
+                sh 'docker image prune -f'
             }
         }
     }
