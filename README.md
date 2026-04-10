@@ -59,7 +59,6 @@ This setup automates the process of:
 ---
 
 ## ⚙️ CICD Workflow
----
 
 ### 2️⃣ Install Dependencies
 
