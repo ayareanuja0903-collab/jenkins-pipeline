@@ -16,8 +16,8 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 sh '''
-                docker stop node-container || true
-                docker rm node-container || true
+                docker ps -q --filter "name=node-container" | grep -q . && docker stop node-container || true
+                docker ps -aq --filter "name=node-container" | grep -q . && docker rm node-container || true
                 '''
             }
         }
@@ -25,12 +25,6 @@ pipeline {
         stage('Run New Container') {
             steps {
                 sh 'docker run -d -p 3000:3000 --name node-container node-app'
-            }
-        }
-
-        stage('Clean Images') {
-            steps {
-                sh 'docker image prune -f'
             }
         }
     }
