@@ -1,0 +1,9 @@
+{
+  "name": "jenkins-node-app",
+  "version": "1.0.0",
+  "description": "Simple Node app for Jenkins CI/CD",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Running tests...\" && exit 0"
+  }
+}
