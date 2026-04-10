@@ -29,7 +29,7 @@ This setup automates the process of:
 
 ```
 .
-├── Scrrenshots
+├── Screenshots
 ├── Dockerfile
 ├── Jenkinsfile
 ├── app.js
