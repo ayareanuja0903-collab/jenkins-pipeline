@@ -1,163 +1,94 @@
 # 🚀 Jenkins CI/CD Pipeline with Docker & Node.js
 
-This project demonstrates a complete **CI/CD pipeline** using Jenkins, Docker, and a Node.js application.
-
----
-
 ## 📌 Project Overview
 
-This setup automates the process of:
-
-* Pulling code from GitHub
-* Building a Docker image
-* Deploying the application in a container
-* Running the application on an EC2 server
+This project implements an automated CI/CD pipeline using Jenkins to build and deploy a Dockerized Node.js application on AWS EC2. GitHub webhooks are used to trigger deployments on every code push.
 
 ---
 
-## 🛠️ Tech Stack
+## 🧰 Tech Stack
 
-* Jenkins (CI/CD)
-* Docker (Containerization)
-* Node.js (Application)
-* GitHub (Version Control)
-* AWS EC2 (Deployment Server)
+* Node.js
+* Jenkins
+* Docker
+* PM2
+* AWS EC2
+* GitHub Webhooks
 
 ---
 
-## 📂 Project Structure
+## 🏗️ Architecture
 
 ```
-.
-├── Screenshots
-├── Dockerfile
-├── Jenkinsfile
-├── app.js
-├── package.json
-└── README.md
+Developer → GitHub → Jenkins → Docker → AWS EC2 → End User
 ```
+
+---
+
+## ⚙️ Workflow
+
+1. Code is pushed to GitHub
+2. Webhook triggers Jenkins
+3. Jenkins builds a Docker image
+4. Existing container is replaced
+5. Updated application is deployed on EC2
+
 ---
 
 ## ✨ Key Features
 
-* Fully automated CI/CD pipeline
-* Dockerized Node.js application
-* Automated deployment on AWS EC2
-* Continuous deployment on every code push
-* Process management using PM2
-* Efficient container lifecycle management
+* Automated CI/CD pipeline
+* Docker-based deployment
+* Continuous deployment on code push
+* Process management with PM2
+* Container lifecycle handling
 
 ---
 
-## ⚠️ Challenges Faced
+## ⚠️ Challenges
 
-* Branch mismatch (master vs main)
-* GitHub webhook not triggering
-* Docker permission issues (/var/run/docker.sock)
+* Branch mismatch (`main` vs `master`)
+* Webhook configuration issues
+* Docker permission errors
 * Port conflicts during deployment
 
 ---
 
-## ⚙️ CICD Workflow
+## ✅ Solutions
 
-### 2️⃣ Install Dependencies
+* Set correct branch (`main`)
+* Fixed webhook configuration
+* Granted Docker access to Jenkins user
+* Implemented container stop & remove logic
 
-```bash
-sudo apt update
-sudo apt install -y openjdk-17-jdk docker.io git npm
+---
+
+## 🎯 Outcome
+
+* Automated build and deployment process
+* Reduced manual effort and deployment errors
+* Consistent application delivery using containers
+* Live application deployed on AWS EC2
+
+---
+
+## 🌐 Access
+
+```
+http://<EC2-PUBLIC-IP>:3001
 ```
 
 ---
 
-### 3️⃣ Start Services
+## 🔍 Verification
 
 ```bash
-sudo systemctl start docker
-sudo systemctl enable docker
-
-sudo systemctl start jenkins
-sudo systemctl enable jenkins
+docker ps
+docker logs node-container
 ```
 
 ---
 
-### 4️⃣ Configure Jenkins
+## 📌 Conclusion
 
-* Open Jenkins:
-
-  ```
-  http://<EC2-IP>:8080
-  ```
-* Install suggested plugins
-* Create a pipeline job
-
----
-
-### 5️⃣ Connect GitHub Repository
-
-* Configure pipeline:
-
-  * Pipeline script from SCM
-  * SCM: Git
-  * Repository URL:
-
-    ```
-    https://github.com/your-username/jenkins-pipeline.git
-    ```
-  * Branch: `main`
-  * Script Path: `Jenkinsfile`
-
----
-
-### 6️⃣ Setup GitHub Webhook
-
-* Go to GitHub → Settings → Webhooks
-* Add:
-
-  ```
-  http://<EC2-IP>:8080/github-webhook/
-  ```
-* Content type: `application/json`
-* Event: Push
-
----
-
-## 🚀 How It Works
-
-1. Developer pushes code to GitHub
-2. GitHub webhook triggers Jenkins
-3. Jenkins pulls latest code
-4. Docker image is built
-5. Old container is removed
-6. New container is deployed
-
----
-
-## ✅ Solutions Implemented
-
-* Updated branch configuration to use main instead of master
-* Corrected GitHub webhook URL and trigger settings
-* Configured AWS Security Group to allow required ports (8080, 3001)
-* Resolved Docker permission issues by adding Jenkins user to Docker group
-* Implemented container lifecycle management (stop, remove, redeploy) to avoid port conflicts
-
----
-
-## 🎯 Final Outcome
-
-* Successfully implemented a fully automated CI/CD pipeline
-* Enabled automatic build and deployment on every code push
-* Reduced manual intervention and deployment errors
-* Achieved consistent and reliable application delivery using Docker
-* Deployed a live Node.js application on AWS EC2 with continuous updates
----
-
-## 👩‍💻 Author
-
-Anuja Ayare
-
----
-
-## ⭐ Acknowledgement
-
-This project demonstrates a real-world DevOps CI/CD pipeline using Jenkins and Docker.
+This project demonstrates a practical CI/CD pipeline using Jenkins and Docker, enabling efficient and reliable application deployment on AWS.
