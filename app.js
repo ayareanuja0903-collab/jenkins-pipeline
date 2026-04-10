@@ -48,7 +48,7 @@ const server = http.createServer((req, res) => {
       <body>
         <div class="card">
           <h1>CI/CD Pipeline Live</h1>
-          <p>Node.js + Jenkins + Docker + AWS</p>
+          <p> Node.js + Jenkins + Docker + AWS </p>
           <div class="tag">Deployed Successfully </div>
         </div>
       </body>
