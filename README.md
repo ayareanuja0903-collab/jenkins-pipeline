@@ -132,6 +132,26 @@ sudo systemctl enable jenkins
 6. New container is deployed
 
 ---
+
+## ✅ Solutions Implemented
+
+* Updated branch configuration to use main instead of master
+* Corrected GitHub webhook URL and trigger settings
+* Configured AWS Security Group to allow required ports (8080, 3001)
+* Resolved Docker permission issues by adding Jenkins user to Docker group
+* Implemented container lifecycle management (stop, remove, redeploy) to avoid port conflicts
+
+---
+
+## 🎯 Final Outcome
+
+* Successfully implemented a fully automated CI/CD pipeline
+* Enabled automatic build and deployment on every code push
+* Reduced manual intervention and deployment errors
+* Achieved consistent and reliable application delivery using Docker
+* Deployed a live Node.js application on AWS EC2 with continuous updates
+---
+
 ## 👩‍💻 Author
 
 Anuja Ayare
