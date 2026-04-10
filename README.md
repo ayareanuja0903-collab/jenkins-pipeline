@@ -36,55 +36,24 @@ This setup automates the process of:
 ├── package.json
 └── README.md
 ```
+✨ Key Features
+````
+Fully automated CI/CD pipeline
+Dockerized Node.js application
+Automated deployment on AWS EC2
+Continuous deployment on every code push
+Process management using PM2
+Efficient container lifecycle management
+````
+⚠️ Challenges Faced
+`````
+Branch mismatch (master vs main)
+GitHub webhook not triggering
+Docker permission issues (/var/run/docker.sock)
+Port conflicts during deployment
 
 ---
-
 ## ⚙️ CICD Workflow
-                    👩‍💻 Developer
-                          │
-                          │ git push
-                          ▼
-                ┌──────────────────────┐
-                │       GitHub         │
-                │ (Source Code Repo)   │
-                └──────────────────────┘
-                          │
-                          │ Webhook Trigger
-                          ▼
-                ┌──────────────────────┐
-                │       Jenkins        │
-                │   (CI/CD Server)     │
-                └──────────────────────┘
-                          │
-        ┌─────────────────┼─────────────────┐
-        │                 │                 │
-        ▼                 ▼                 ▼
-   Checkout Code     Build Stage      Test Stage
-                        │                 │
-                        └──────┬──────────┘
-                               ▼
-                     ┌──────────────────┐
-                     │  Docker Build    │
-                     │ (Create Image)   │
-                     └──────────────────┘
-                               │
-                               ▼
-                     ┌──────────────────┐
-                     │ Docker Container │
-                     │  (Deployment)    │
-                     └──────────────────┘
-                               │
-                               ▼
-                 ┌────────────────────────┐
-                 │        AWS EC2         │
-                 │   (Application Host)   │
-                 └────────────────────────┘
-                               │
-                               ▼
-                        🌐 End Users
-                  http://EC2-IP:3001
-
-
 ---
 
 ### 2️⃣ Install Dependencies
